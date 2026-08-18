@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, .font-manuscript {
+    font-family: 'Cinzel', 'Noto Serif Ethiopic', serif;
+  }
+
+  .font-geez {
+    font-family: 'Noto Serif Ethiopic', 'Noto Sans Ethiopic', serif;
+  }
+}
+
+/* Custom Scrollbar for parchment feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(212, 175, 55, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(194, 167, 105, 0.4);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.8);
+}
+
+/* Themes */
+.theme-parchment {
+  --bg-main: #F4ECE0;
+  --bg-card: #FAF6EE;
+  --bg-accent: #E8DCB8;
+  --text-main: #2A1F10;
+  --text-muted: #6B5B45;
+  --border-gold: #C2A769;
+}
+
+.theme-obsidian {
+  --bg-main: #0D0D0F;
+  --bg-card: #18181C;
+  --bg-accent: #26262E;
+  --text-main: #EAE6DF;
+  --text-muted: #9E9689;
+  --border-gold: #D4AF37;
+}
+
+.theme-royal {
+  --bg-main: #140A1F;
+  --bg-card: #211233;
+  --bg-accent: #341D52;
+  --text-main: #F3EAFE;
+  --text-muted: #B49BC9;
+  --border-gold: #FFD700;
+}
+
+/* Illuminated Manuscript Drop Cap */
+.drop-cap::first-letter {
+  font-family: 'Cinzel', 'Noto Serif Ethiopic', serif;
+  float: left;
+  font-size: 3.5rem;
+  line-height: 0.8;
+  padding-top: 4px;
+  padding-right: 8px;
+  padding-left: 4px;
+  margin-right: 8px;
+  color: #D4AF37;
+  background: linear-gradient(135deg, rgba(139, 0, 0, 0.15), rgba(212, 175, 55, 0.15));
+  border: 1.5px solid #D4AF37;
+  border-radius: 4px;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+}
+
+/* Illuminated Border Frame */
+.illuminated-border {
+  position: relative;
+  border: 2px solid transparent;
+  border-image: linear-gradient(135deg, #D4AF37 0%, #8B0000 50%, #D4AF37 100%) 1;
+}
+
+.illuminated-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.illuminated-card:hover {
+  border-color: rgba(212, 175, 55, 0.7);
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Ethiopian Cross Motif Pattern Overlay */
+.geez-pattern-bg {
+  background-image: radial-gradient(rgba(212, 175, 55, 0.12) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Pulsing Gold Glow */
+@keyframes goldPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.7);
+  }
+}
+
+.gold-glow {
+  animation: goldPulse 3s infinite ease-in-out;
+}
+
+/* Hide scrollbar for filter chip row */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Fade-in animation for tab transitions */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-slide-in {
+  animation: fadeSlideIn 0.3s ease-out;
+}
+
