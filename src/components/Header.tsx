@@ -72,8 +72,8 @@ export const Header: React.FC<HeaderProps> = ({
                 <h1 className="text-xl sm:text-2xl font-bold font-manuscript tracking-tight text-parchment-900 dark:text-parchment-50">
                   The Sacred Texts Library
                 </h1>
-                <span className="bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/40 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                  100% Free & Open
+                <span className="bg-ethiopian-gold/20 text-ethiopian-gold border border-ethiopian-gold/40 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                  Sacred Archive
                 </span>
               </div>
               <p className="text-xs font-geez text-ethiopian-crimson dark:text-ethiopian-gold/90 font-medium">

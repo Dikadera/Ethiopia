@@ -205,10 +205,10 @@ export const ScriptureReader: React.FC<ScriptureReaderProps> = ({
       <div className="illuminated-card rounded-2xl p-4 bg-parchment-100/90 dark:bg-ethiopian-obsidianCard/90 border border-ethiopian-gold/30 space-y-2">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold text-ethiopian-gold uppercase tracking-wider flex items-center gap-1.5">
-            <Unlock className="w-3.5 h-3.5 text-emerald-400" />
+            <Unlock className="w-3.5 h-3.5 text-ethiopian-gold" />
             All {selectedBook.totalChapters} Chapters Unlocked & Authentic:
           </span>
-          <span className="text-[11px] text-emerald-400 font-semibold">100% Free Access</span>
+          <span className="text-[11px] text-ethiopian-gold font-semibold">Full Unrestricted Access</span>
         </div>
 
         {/* Scrollable Chapter Buttons Strip */}

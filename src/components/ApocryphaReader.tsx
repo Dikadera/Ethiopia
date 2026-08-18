@@ -67,9 +67,9 @@ export const ApocryphaReader: React.FC<ApocryphaReaderProps> = ({
 
           <div className="flex items-center gap-2">
             <span className="bg-ethiopian-gold/20 text-ethiopian-gold dark:text-ethiopian-goldBright border border-ethiopian-gold/40 text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
-              ✨ 100% Free & Open Access
+              ✨ Sacred Apocrypha Text
             </span>
-            <span className="bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+            <span className="bg-ethiopian-gold/20 text-ethiopian-gold dark:text-ethiopian-goldBright border border-ethiopian-gold/30 text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
               Full Unrestricted Text
             </span>
           </div>

@@ -24,10 +24,10 @@ export const LibraryHome: React.FC<LibraryHomeProps> = ({ onSelectPage }) => {
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1C120C] via-[#2A1810] to-[#0D0B12] p-8 sm:p-12 border border-ethiopian-gold/40 shadow-2xl text-center space-y-6">
         <div className="absolute inset-0 geez-pattern-bg opacity-30 pointer-events-none"></div>
         
-        {/* Free & Open Access Banner */}
+        {/* Sanctuary Banner */}
         <div className="inline-flex items-center gap-2 bg-gradient-to-r from-ethiopian-gold/20 via-ethiopian-gold/30 to-ethiopian-gold/20 border border-ethiopian-gold/50 px-4 py-1.5 rounded-full text-xs font-semibold text-ethiopian-goldBright uppercase tracking-widest shadow-lg">
-          <ShieldCheck className="w-4 h-4 text-emerald-400" />
-          <span>100% Free & Open Access to All — No Restrictions</span>
+          <ShieldCheck className="w-4 h-4 text-ethiopian-gold" />
+          <span>Complete Ancient Manuscript Library</span>
         </div>
 
         <div className="max-w-3xl mx-auto space-y-4">
@@ -35,7 +35,7 @@ export const LibraryHome: React.FC<LibraryHomeProps> = ({ onSelectPage }) => {
             The Digital Sanctuary of Sacred Texts
           </h1>
           <p className="text-sm sm:text-lg text-parchment-200 font-serif leading-relaxed">
-            Explore the ancient 81-book Ethiopian Orthodox Bible alongside preserved Early Christian Apocrypha & Lost Gospels. Fully open, interactive, and free for all scholars and seekers worldwide.
+            Explore the ancient 81-book Ethiopian Orthodox Bible alongside preserved Early Christian Apocrypha & Lost Gospels. Interactive codices for all scholars and seekers worldwide.
           </p>
         </div>
 
@@ -54,7 +54,7 @@ export const LibraryHome: React.FC<LibraryHomeProps> = ({ onSelectPage }) => {
             <span className="text-parchment-400">Infancy & Lost Gospels</span>
           </div>
           <div className="bg-ethiopian-obsidianCard/80 border border-ethiopian-gold/20 p-3 rounded-xl">
-            <span className="block text-xl font-bold font-manuscript text-emerald-400">Free Forever</span>
+            <span className="block text-xl font-bold font-manuscript text-ethiopian-gold">Full Texts</span>
             <span className="text-parchment-400">Unrestricted Access</span>
           </div>
         </div>

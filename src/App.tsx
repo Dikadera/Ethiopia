@@ -192,7 +192,7 @@ function App() {
           </p>
 
           <p className="text-xs text-parchment-500 dark:text-parchment-500 max-w-3xl mx-auto">
-            The Ethiopian Bible & Sacred Texts Library — 100% Free & Open Access to All. Exploring the 81-book canon of the Ethiopian Orthodox Tewahedo Church, the Infancy Gospel of Thomas, Protoevangelium of James, and Gospel of Mary Magdalene.
+            The Ethiopian Bible & Sacred Texts Library. Exploring the 81-book canon of the Ethiopian Orthodox Tewahedo Church, the Infancy Gospel of Thomas, Protoevangelium of James, and Gospel of Mary Magdalene.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-parchment-500">
@@ -200,7 +200,7 @@ function App() {
             <span className="text-ethiopian-gold">•</span>
             <span>📜 Garima Gospels & Apocrypha Manuscripts</span>
             <span className="text-ethiopian-gold">•</span>
-            <span>🔓 Free & Open Access</span>
+            <span>📜 Ancient Sacred Scriptures</span>
           </div>
         </div>
       </footer>
