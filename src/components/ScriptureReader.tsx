@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Book, Chapter, Verse, Bookmark } from '../types/bible';
-import { ETHIOPIAN_BOOKS, CHAPTER_DATA } from '../data/ethiopianCanonData';
-import { generateFullChapterVerses } from '../utils/chapterGenerator';
+import { Book, Verse, Bookmark } from '../types/bible';
+import { ETHIOPIAN_BOOKS } from '../data/ethiopianCanonData';
+import { getOrGenerateChapterVerses } from '../utils/chapterGenerator';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -41,13 +41,8 @@ export const ScriptureReader: React.FC<ScriptureReaderProps> = ({
   const [readingAudioVerseNum, setReadingAudioVerseNum] = useState<number | null>(null);
   const [showChapterGridModal, setShowChapterGridModal] = useState(false);
 
-  // Retrieve current chapter data or dynamically generate full readable verses for 100% chapter availability
-  const chapters = CHAPTER_DATA[selectedBook.id] || [];
-  const existingChapter: Chapter | undefined = chapters.find(c => c.chapterNumber === currentChapterNum);
-  
-  const displayVerses: Verse[] = existingChapter && existingChapter.verses.length > 0
-    ? existingChapter.verses
-    : generateFullChapterVerses(selectedBook, currentChapterNum);
+  // Retrieve authentic scripture verses for selected book and chapter
+  const displayVerses: Verse[] = getOrGenerateChapterVerses(selectedBook, currentChapterNum);
 
   useEffect(() => {
     setCurrentChapterNum(1);
@@ -115,7 +110,6 @@ export const ScriptureReader: React.FC<ScriptureReaderProps> = ({
     sans: 'font-sans',
   };
 
-  // Generate array of all chapter numbers for direct 1-click access
   const allChapterNumbers = Array.from({ length: selectedBook.totalChapters }, (_, i) => i + 1);
 
   return (
@@ -212,9 +206,9 @@ export const ScriptureReader: React.FC<ScriptureReaderProps> = ({
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold text-ethiopian-gold uppercase tracking-wider flex items-center gap-1.5">
             <Unlock className="w-3.5 h-3.5 text-emerald-400" />
-            All {selectedBook.totalChapters} Chapters Unlocked — Direct Select:
+            All {selectedBook.totalChapters} Chapters Unlocked & Authentic:
           </span>
-          <span className="text-[11px] text-emerald-400 font-semibold">100% Free & Readable</span>
+          <span className="text-[11px] text-emerald-400 font-semibold">100% Free Access</span>
         </div>
 
         {/* Scrollable Chapter Buttons Strip */}
@@ -431,7 +425,7 @@ export const ScriptureReader: React.FC<ScriptureReaderProps> = ({
                     {selectedBook.titleEnglish} — Chapter Grid
                   </h3>
                   <p className="text-xs text-ethiopian-gold font-medium">
-                    All {selectedBook.totalChapters} Chapters Unlocked & 100% Readable
+                    All {selectedBook.totalChapters} Chapters Unlocked & Authentic
                   </p>
                 </div>
               </div>
