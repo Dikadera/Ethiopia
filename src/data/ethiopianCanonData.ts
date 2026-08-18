@@ -278,7 +278,7 @@ export const ETHIOPIAN_BOOKS: Book[] = [
   }
 ];
 
-// Complete Chapter Text Samples for Flagship Ethiopian Books
+// Chapter Data for Ethiopian Books
 export const CHAPTER_DATA: Record<string, Chapter[]> = {
   enoch: [
     {
@@ -411,6 +411,92 @@ export const CHAPTER_DATA: Record<string, Chapter[]> = {
       ]
     }
   ],
+  meqabyan2: [
+    {
+      bookId: 'meqabyan2',
+      chapterNumber: 1,
+      verses: [
+        {
+          number: 1,
+          textEnglish: "And Meqabis answered and said before the assembly: 'He who loses his life for the Law of the Most High shall find it in the resurrection of the just.'",
+          textAmharic: "መቃቢስም በማኅበሩ ፊት መልሶ እንዲህ አለ፤ ‘ስለ ልዑል ሕግ ነፍሱን የሚያጣ በጻድቃን ትንሣኤ ያገኛታል።’",
+          textGeez: "ወአውሠአ መቃቢስ ወይቤ ቅድመ ማኅበር፤ ዘአኅጐላ ለነፍሱ በእንተ ሕገ ልዑል ይረክባ በትንሣኤ ጻድቃን።"
+        },
+        {
+          number: 2,
+          textEnglish: "And all the brethren strengthened their hearts in the Lord God of Israel.",
+          textAmharic: "ወንድሞችም ሁሉ በእስራኤል አምላክ በእግዚአብሔር ልባቸውን አጸኑ።",
+          textGeez: "ወአጽንዑ ልቦሙ ኵሎሙ አኃው በ እግዚአብሔር አምላከ እስራኤል፤"
+        }
+      ]
+    }
+  ],
+  meqabyan3: [
+    {
+      bookId: 'meqabyan3',
+      chapterNumber: 1,
+      verses: [
+        {
+          number: 1,
+          textEnglish: "Blessed is the man who walks in the fear of the Almighty and flees from the counsels of the wicked; for God shall preserve his soul in times of affliction.",
+          textAmharic: "ሁሉን በሚችል አምላክ ፍርሃት የሚመላለስ፥ ከክፉዎችም ምክር የሚሸሽ ሰው ቡሩክ ነው፤ እግዚአብሔር በመከራ ጊዜ ነፍሱን ይጠብቃታልና።",
+          textGeez: "ቡሩክ ብእሲ ዘየሐውር በፈራህያ አምላክ ኵሉ ዘይክል።"
+        },
+        {
+          number: 2,
+          textEnglish: "For the Lord hears the cry of the humble and will not despise the prayer of the contrite in heart.",
+          textAmharic: "እግዚአብሔር የትሑታንን ጩኸት ይሰማል፤ የተሰበረ ልብ ያላቸውንም ጸሎት አይንቅምና።",
+          textGeez: "እስመ ይሠምዕ እግዚአብሔር ዐራሐ ትሑታን።"
+        }
+      ]
+    }
+  ],
+  genesis: [
+    {
+      bookId: 'genesis',
+      chapterNumber: 1,
+      verses: [
+        {
+          number: 1,
+          textEnglish: "In the beginning God created the heaven and the earth.",
+          textAmharic: "በመጀመሪያ እግዚአብሔር ሰማይንና ምድርን ፈጠረ።",
+          textGeez: "በቀዳሚ ገብረ እግዚአብሔር ሰማየ ወምድር።"
+        },
+        {
+          number: 2,
+          textEnglish: "And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.",
+          textAmharic: "ምድርም ባዶ ነበረች፥ ምንም አልነበረባትም፤ ጨለማም በጥልቁ ላይ ነበረ፤ የእግዚአብሔርም መንፈስ በውኃ ላይ ይንቀሳቀስ ነበረ።",
+          textGeez: "ወምድርሰ ኢታስተርኢ ወኢኮነት ድልወተ፤ ወጽልመት ዲበ ቀላይ ወመንፈሰ እግዚአብሔር ይሠፍር ዲበ ማይ።"
+        },
+        {
+          number: 3,
+          textEnglish: "And God said, Let there be light: and there was light.",
+          textAmharic: "እግዚአብሔርም፤ ብርሃን ይሁን አለ፤ ብርሃንም ሆነ።",
+          textGeez: "ወይቤ እግዚአብሔር ይኩን ብርሃን፤ ወኮነ ብርሃን።"
+        }
+      ]
+    }
+  ],
+  psalms: [
+    {
+      bookId: 'psalms',
+      chapterNumber: 1,
+      verses: [
+        {
+          number: 1,
+          textEnglish: "Blessed is the man that walketh not in the counsel of the ungodly, nor standeth in the way of sinners, nor sitteth in the seat of the scornful.",
+          textAmharic: "ምስጉን ነው በበደለኞች ምክር ያልሄደ፥ በኃጢአተኞችም መንገድ ያልቆመ፥ በዋዘኞችም ወንበር ያልተቀመጠ።",
+          textGeez: "ብፁዕ ብእሲ ዘኢሖረ በምክረ ረሲዓን፤ ወዘኢቆመ በ ፍኖተ ኃጣአን፤ ወዘኢነበረ በ መንበረ መስተሃዝልያን።"
+        },
+        {
+          number: 2,
+          textEnglish: "But his delight is in the law of the Lord; and in his law doth he meditate day and night.",
+          textAmharic: "ነገር ግን በእግዚአብሔር ሕግ ደስ ይለዋል፥ ሕጉንም በቀንና በሌሊት ያስባል።",
+          textGeez: "አላ በሕገ እግዚአብሔር ሠምረ፤ ወበሕጉ ያነብብ መዓልተ ወሌሊተ።"
+        }
+      ]
+    }
+  ],
   matthew: [
     {
       bookId: 'matthew',
@@ -447,7 +533,7 @@ export const CHAPTER_DATA: Record<string, Chapter[]> = {
           number: 15,
           textEnglish: "To execute judgment upon all, and to convince all that are ungodly among them of all their ungodly deeds which they have ungodly committed, and of all their hard speeches which ungodly sinners have spoken against him.",
           textAmharic: "በሁሉም ላይ እንዲፈርድ፤ በኃጢአተኝነት ባደረጉት ሥራ ሁሉና በእርሱ ላይ በተናገሩት ድፍረት ሁሉ ኃጢአተኞችን ለማጥፋት።",
-          textGeez: "ከመ ይግበር ደይነ ዲበ ኵሉ ወየሐጉል ኵሎ ኃጣአነ በእንተ ኵሉ ግብሮሙ ዘረሲዖሙ።"
+          textGeez: "ከመ ይግበር ደይነ ደይነ ዲበ ኵሉ ወየሐጉል ኵሎ ኃጣአነ በእንተ ኵሉ ግብሮሙ ዘረሲዖሙ።"
         }
       ]
     }
