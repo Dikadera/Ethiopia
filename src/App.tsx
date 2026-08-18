@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Header } from './components/Header';
+import { Header, PrimaryPage, BibleTab } from './components/Header';
+import { LibraryHome } from './components/LibraryHome';
 import { CanonExplorer } from './components/CanonExplorer';
 import { ScriptureReader } from './components/ScriptureReader';
 import { CrossReferenceExplorer } from './components/CrossReferenceExplorer';
 import { ManuscriptGallery } from './components/ManuscriptGallery';
 import { GeezFidelChart } from './components/GeezFidelChart';
 import { StudyNotes } from './components/StudyNotes';
+import { ApocryphaReader } from './components/ApocryphaReader';
+
 import { Book, Bookmark } from './types/bible';
 import { ETHIOPIAN_BOOKS } from './data/ethiopianCanonData';
+import { INFANCY_GOSPEL_OF_THOMAS } from './data/infancyGospelThomas';
+import { PROTOEVANGELIUM_OF_JAMES } from './data/protoevangeliumJames';
+import { GOSPEL_OF_MARY_MAGDALENE } from './data/gospelMaryMagdalene';
 
-type Tab = 'canon' | 'reader' | 'crossref' | 'gallery' | 'fidel' | 'notes';
 type Theme = 'parchment' | 'obsidian' | 'royal';
 type LangMode = 'english' | 'amharic' | 'dual';
 
@@ -20,7 +25,8 @@ const THEME_CLASSES: Record<Theme, string> = {
 };
 
 function App() {
-  const [activeTab, setActiveTab] = useState<Tab>('canon');
+  const [primaryPage, setPrimaryPage] = useState<PrimaryPage>('library');
+  const [activeTab, setActiveTab] = useState<BibleTab>('canon');
   const [theme, setTheme] = useState<Theme>('obsidian');
   const [languageMode, setLanguageMode] = useState<LangMode>('dual');
   const [searchQuery, setSearchQuery] = useState('');
@@ -51,6 +57,7 @@ function App() {
 
   const handleSelectBook = (book: Book) => {
     setSelectedBook(book);
+    setPrimaryPage('ethiopian-bible');
     setActiveTab('reader');
   };
 
@@ -70,13 +77,24 @@ function App() {
     const book = ETHIOPIAN_BOOKS.find(b => b.id === bm.bookId);
     if (book) {
       setSelectedBook(book);
+      setPrimaryPage('ethiopian-bible');
       setActiveTab('reader');
     }
+  };
+
+  const handleSelectLibraryPage = (pageId: 'ethiopian-bible' | 'infancy-thomas' | 'proto-james' | 'gospel-mary') => {
+    setPrimaryPage(pageId);
+    if (pageId === 'ethiopian-bible') {
+      setActiveTab('canon');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <div className={`min-h-screen transition-colors duration-500 ${THEME_CLASSES[theme]}`}>
       <Header
+        primaryPage={primaryPage}
+        setPrimaryPage={setPrimaryPage}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         searchQuery={searchQuery}
@@ -88,40 +106,74 @@ function App() {
       />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {activeTab === 'canon' && (
-          <CanonExplorer
-            onSelectBook={handleSelectBook}
-            searchQuery={searchQuery}
+        {/* 1. Library Home Portal */}
+        {primaryPage === 'library' && (
+          <LibraryHome onSelectPage={handleSelectLibraryPage} />
+        )}
+
+        {/* 2. Ethiopian Bible Main Page */}
+        {primaryPage === 'ethiopian-bible' && (
+          <>
+            {activeTab === 'canon' && (
+              <CanonExplorer
+                onSelectBook={handleSelectBook}
+                searchQuery={searchQuery}
+              />
+            )}
+
+            {activeTab === 'reader' && (
+              <ScriptureReader
+                selectedBook={selectedBook}
+                onSelectBook={handleSelectBook}
+                languageMode={languageMode}
+                onAddBookmark={handleAddBookmark}
+                bookmarks={bookmarks}
+              />
+            )}
+
+            {activeTab === 'crossref' && (
+              <CrossReferenceExplorer />
+            )}
+
+            {activeTab === 'gallery' && (
+              <ManuscriptGallery />
+            )}
+
+            {activeTab === 'fidel' && (
+              <GeezFidelChart />
+            )}
+
+            {activeTab === 'notes' && (
+              <StudyNotes
+                bookmarks={bookmarks}
+                onRemoveBookmark={handleRemoveBookmark}
+                onSelectBookmark={handleSelectBookmark}
+              />
+            )}
+          </>
+        )}
+
+        {/* 3. Infancy Gospel of Thomas Page */}
+        {primaryPage === 'infancy-thomas' && (
+          <ApocryphaReader
+            book={INFANCY_GOSPEL_OF_THOMAS}
+            onBackToLibrary={() => setPrimaryPage('library')}
           />
         )}
 
-        {activeTab === 'reader' && (
-          <ScriptureReader
-            selectedBook={selectedBook}
-            onSelectBook={handleSelectBook}
-            languageMode={languageMode}
-            onAddBookmark={handleAddBookmark}
-            bookmarks={bookmarks}
+        {/* 4. Protoevangelium of James Page */}
+        {primaryPage === 'proto-james' && (
+          <ApocryphaReader
+            book={PROTOEVANGELIUM_OF_JAMES}
+            onBackToLibrary={() => setPrimaryPage('library')}
           />
         )}
 
-        {activeTab === 'crossref' && (
-          <CrossReferenceExplorer />
-        )}
-
-        {activeTab === 'gallery' && (
-          <ManuscriptGallery />
-        )}
-
-        {activeTab === 'fidel' && (
-          <GeezFidelChart />
-        )}
-
-        {activeTab === 'notes' && (
-          <StudyNotes
-            bookmarks={bookmarks}
-            onRemoveBookmark={handleRemoveBookmark}
-            onSelectBookmark={handleSelectBookmark}
+        {/* 5. Gospel of Mary Magdalene Page */}
+        {primaryPage === 'gospel-mary' && (
+          <ApocryphaReader
+            book={GOSPEL_OF_MARY_MAGDALENE}
+            onBackToLibrary={() => setPrimaryPage('library')}
           />
         )}
       </main>
@@ -139,16 +191,16 @@ function App() {
             ውዳሴ ለእግዚአብሔር ዘለዓለም — Praise be to God Forever
           </p>
 
-          <p className="text-xs text-parchment-500 dark:text-parchment-500 max-w-2xl mx-auto">
-            The Ethiopian Bible Web App — Exploring the 81-book canon of the Ethiopian Orthodox Tewahedo Church. Scripture texts are public domain translations and Ge'ez manuscripts. Built with reverence for the oldest complete Christian biblical tradition.
+          <p className="text-xs text-parchment-500 dark:text-parchment-500 max-w-3xl mx-auto">
+            The Ethiopian Bible & Sacred Texts Library — 100% Free & Open Access to All. Exploring the 81-book canon of the Ethiopian Orthodox Tewahedo Church, the Infancy Gospel of Thomas, Protoevangelium of James, and Gospel of Mary Magdalene.
           </p>
 
-          <div className="flex items-center justify-center gap-4 text-xs text-parchment-500">
+          <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-parchment-500">
             <span>🇪🇹 Ethiopian Orthodox Tewahedo Church</span>
             <span className="text-ethiopian-gold">•</span>
-            <span>📜 Garima Gospels (c. 390–650 AD)</span>
+            <span>📜 Garima Gospels & Apocrypha Manuscripts</span>
             <span className="text-ethiopian-gold">•</span>
-            <span>🕍 Lalibela, Aksum, Gondar</span>
+            <span>🔓 Free & Open Access</span>
           </div>
         </div>
       </footer>

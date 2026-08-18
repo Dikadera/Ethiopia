@@ -9,13 +9,21 @@ import {
   Sun, 
   Moon, 
   Crown,
-  Languages
+  Languages,
+  Home,
+  Scroll,
+  Feather
 } from 'lucide-react';
 import { AudioAmbiencePlayer } from './AudioAmbiencePlayer';
 
+export type PrimaryPage = 'library' | 'ethiopian-bible' | 'infancy-thomas' | 'proto-james' | 'gospel-mary';
+export type BibleTab = 'canon' | 'reader' | 'crossref' | 'gallery' | 'fidel' | 'notes';
+
 interface HeaderProps {
-  activeTab: 'canon' | 'reader' | 'crossref' | 'gallery' | 'fidel' | 'notes';
-  setActiveTab: (tab: 'canon' | 'reader' | 'crossref' | 'gallery' | 'fidel' | 'notes') => void;
+  primaryPage: PrimaryPage;
+  setPrimaryPage: (page: PrimaryPage) => void;
+  activeTab: BibleTab;
+  setActiveTab: (tab: BibleTab) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   theme: 'parchment' | 'obsidian' | 'royal';
@@ -25,6 +33,8 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({
+  primaryPage,
+  setPrimaryPage,
   activeTab,
   setActiveTab,
   searchQuery,
@@ -35,16 +45,16 @@ export const Header: React.FC<HeaderProps> = ({
   setLanguageMode,
 }) => {
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-md bg-parchment-100/90 dark:bg-ethiopian-obsidian/90 border-b border-ethiopian-gold/30 shadow-lg transition-colors duration-300">
+    <header className="sticky top-0 z-50 backdrop-blur-md bg-parchment-100/95 dark:bg-ethiopian-obsidian/95 border-b border-ethiopian-gold/30 shadow-lg transition-colors duration-300">
       {/* Top Banner Ribbon */}
       <div className="bg-ethiopian-flag-gradient h-1 w-full opacity-90"></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 space-y-3">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           
           {/* Brand Logo & Title */}
           <div 
-            onClick={() => setActiveTab('canon')}
+            onClick={() => setPrimaryPage('library')}
             className="flex items-center gap-3 cursor-pointer group"
           >
             <div className="relative w-11 h-11 rounded-xl bg-gradient-to-br from-ethiopian-gold to-ethiopian-crimson p-0.5 shadow-md shadow-ethiopian-gold/20 group-hover:scale-105 transition-transform">
@@ -60,24 +70,24 @@ export const Header: React.FC<HeaderProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-xl sm:text-2xl font-bold font-manuscript tracking-tight text-parchment-900 dark:text-parchment-50">
-                  The Ethiopian Bible
+                  The Sacred Texts Library
                 </h1>
-                <span className="bg-ethiopian-gold/20 text-ethiopian-gold dark:text-ethiopian-goldBright border border-ethiopian-gold/40 text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wider">
-                  81 Books Canon
+                <span className="bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/40 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                  100% Free & Open
                 </span>
               </div>
               <p className="text-xs font-geez text-ethiopian-crimson dark:text-ethiopian-gold/90 font-medium">
-                መጽሐፍ ቅዱስ ፹፩ — ኦርቶዶክሳዊት ተዋሕዶ ቤተ ክርስቲያን
+                መጽሐፍ ቅዱስ ፹፩ ወወንጌላት ዓፖክሪፋ — Ethiopian Canon & Apocrypha
               </p>
             </div>
           </div>
 
           {/* Search Bar */}
-          <div className="w-full md:w-80 relative">
+          <div className="w-full md:w-72 relative">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-ethiopian-gold" />
             <input
               type="text"
-              placeholder="Search 81 books, Ge'ez titles, 1 Enoch..."
+              placeholder="Search 81 books, Apocrypha, Enoch..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-9 pr-4 py-1.5 text-sm bg-parchment-50/80 dark:bg-ethiopian-obsidianCard/90 border border-ethiopian-gold/30 rounded-full focus:outline-none focus:border-ethiopian-gold focus:ring-1 focus:ring-ethiopian-gold text-parchment-900 dark:text-parchment-100 placeholder-parchment-500/70"
@@ -148,80 +158,148 @@ export const Header: React.FC<HeaderProps> = ({
 
         </div>
 
-        {/* Navigation Tabs */}
-        <nav className="flex items-center gap-1 sm:gap-2 mt-3 pt-2 border-t border-ethiopian-gold/20 overflow-x-auto no-scrollbar text-xs sm:text-sm font-medium">
+        {/* Primary Page Navigation Bar */}
+        <div className="flex items-center gap-1 sm:gap-2 pt-2 border-t border-ethiopian-gold/20 overflow-x-auto no-scrollbar text-xs sm:text-sm font-semibold">
           <button
-            onClick={() => setActiveTab('canon')}
+            onClick={() => setPrimaryPage('library')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg whitespace-nowrap transition-all ${
-              activeTab === 'canon' 
-                ? 'bg-ethiopian-gold text-black font-semibold shadow-sm' 
+              primaryPage === 'library'
+                ? 'bg-ethiopian-gold text-black font-bold shadow-sm scale-105'
+                : 'text-parchment-700 dark:text-parchment-300 hover:bg-ethiopian-gold/15'
+            }`}
+          >
+            <Home className="w-4 h-4" />
+            Library Home
+          </button>
+
+          <button
+            onClick={() => setPrimaryPage('ethiopian-bible')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg whitespace-nowrap transition-all ${
+              primaryPage === 'ethiopian-bible'
+                ? 'bg-ethiopian-gold text-black font-bold shadow-sm scale-105'
                 : 'text-parchment-700 dark:text-parchment-300 hover:bg-ethiopian-gold/15'
             }`}
           >
             <BookOpen className="w-4 h-4" />
-            81 Books Canon
+            Ethiopian Bible (81 Books)
           </button>
 
           <button
-            onClick={() => setActiveTab('reader')}
+            onClick={() => setPrimaryPage('infancy-thomas')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg whitespace-nowrap transition-all ${
-              activeTab === 'reader' 
-                ? 'bg-ethiopian-gold text-black font-semibold shadow-sm' 
-                : 'text-parchment-700 dark:text-parchment-300 hover:bg-ethiopian-gold/15'
+              primaryPage === 'infancy-thomas'
+                ? 'bg-amber-500 text-black font-bold shadow-sm scale-105'
+                : 'text-parchment-700 dark:text-parchment-300 hover:bg-amber-500/15'
             }`}
           >
-            <Sparkles className="w-4 h-4" />
-            Scripture Reader
+            <Sparkles className="w-4 h-4 text-amber-500" />
+            Infancy Gospel of Thomas
           </button>
 
           <button
-            onClick={() => setActiveTab('crossref')}
+            onClick={() => setPrimaryPage('proto-james')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg whitespace-nowrap transition-all ${
-              activeTab === 'crossref' 
-                ? 'bg-ethiopian-gold text-black font-semibold shadow-sm' 
-                : 'text-parchment-700 dark:text-parchment-300 hover:bg-ethiopian-gold/15'
+              primaryPage === 'proto-james'
+                ? 'bg-blue-500 text-white font-bold shadow-sm scale-105'
+                : 'text-parchment-700 dark:text-parchment-300 hover:bg-blue-500/15'
             }`}
           >
-            <GitMerge className="w-4 h-4" />
-            Cross-References
+            <Scroll className="w-4 h-4 text-blue-400" />
+            Protoevangelium of James
           </button>
 
           <button
-            onClick={() => setActiveTab('gallery')}
+            onClick={() => setPrimaryPage('gospel-mary')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg whitespace-nowrap transition-all ${
-              activeTab === 'gallery' 
-                ? 'bg-ethiopian-gold text-black font-semibold shadow-sm' 
-                : 'text-parchment-700 dark:text-parchment-300 hover:bg-ethiopian-gold/15'
+              primaryPage === 'gospel-mary'
+                ? 'bg-purple-600 text-white font-bold shadow-sm scale-105'
+                : 'text-parchment-700 dark:text-parchment-300 hover:bg-purple-500/15'
             }`}
           >
-            <ImageIcon className="w-4 h-4" />
-            Manuscript Gallery
+            <Feather className="w-4 h-4 text-purple-400" />
+            Gospel of Mary Magdalene
           </button>
+        </div>
 
-          <button
-            onClick={() => setActiveTab('fidel')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg whitespace-nowrap transition-all ${
-              activeTab === 'fidel' 
-                ? 'bg-ethiopian-gold text-black font-semibold shadow-sm' 
-                : 'text-parchment-700 dark:text-parchment-300 hover:bg-ethiopian-gold/15'
-            }`}
-          >
-            <span className="font-geez font-bold text-base">ሀ</span>
-            Ge'ez Fidel Explorer
-          </button>
+        {/* Sub-navigation bar if inside Ethiopian Bible page */}
+        {primaryPage === 'ethiopian-bible' && (
+          <nav className="flex items-center gap-1 sm:gap-2 pt-2 border-t border-ethiopian-gold/10 overflow-x-auto no-scrollbar text-xs font-medium">
+            <span className="text-[11px] text-ethiopian-gold font-bold uppercase tracking-widest mr-1">
+              Bible Tools:
+            </span>
+            <button
+              onClick={() => setActiveTab('canon')}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-md transition-all ${
+                activeTab === 'canon' 
+                  ? 'bg-ethiopian-gold/30 text-ethiopian-gold font-semibold border border-ethiopian-gold/50' 
+                  : 'text-parchment-600 dark:text-parchment-400 hover:text-ethiopian-gold'
+              }`}
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              81 Canon Index
+            </button>
 
-          <button
-            onClick={() => setActiveTab('notes')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg whitespace-nowrap transition-all ${
-              activeTab === 'notes' 
-                ? 'bg-ethiopian-gold text-black font-semibold shadow-sm' 
-                : 'text-parchment-700 dark:text-parchment-300 hover:bg-ethiopian-gold/15'
-            }`}
-          >
-            <Bookmark className="w-4 h-4" />
-            Bookmarks & Notes
-          </button>
-        </nav>
+            <button
+              onClick={() => setActiveTab('reader')}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-md transition-all ${
+                activeTab === 'reader' 
+                  ? 'bg-ethiopian-gold/30 text-ethiopian-gold font-semibold border border-ethiopian-gold/50' 
+                  : 'text-parchment-600 dark:text-parchment-400 hover:text-ethiopian-gold'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              Scripture Reader
+            </button>
+
+            <button
+              onClick={() => setActiveTab('crossref')}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-md transition-all ${
+                activeTab === 'crossref' 
+                  ? 'bg-ethiopian-gold/30 text-ethiopian-gold font-semibold border border-ethiopian-gold/50' 
+                  : 'text-parchment-600 dark:text-parchment-400 hover:text-ethiopian-gold'
+              }`}
+            >
+              <GitMerge className="w-3.5 h-3.5" />
+              Cross-References
+            </button>
+
+            <button
+              onClick={() => setActiveTab('gallery')}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-md transition-all ${
+                activeTab === 'gallery' 
+                  ? 'bg-ethiopian-gold/30 text-ethiopian-gold font-semibold border border-ethiopian-gold/50' 
+                  : 'text-parchment-600 dark:text-parchment-400 hover:text-ethiopian-gold'
+              }`}
+            >
+              <ImageIcon className="w-3.5 h-3.5" />
+              Manuscripts
+            </button>
+
+            <button
+              onClick={() => setActiveTab('fidel')}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-md transition-all ${
+                activeTab === 'fidel' 
+                  ? 'bg-ethiopian-gold/30 text-ethiopian-gold font-semibold border border-ethiopian-gold/50' 
+                  : 'text-parchment-600 dark:text-parchment-400 hover:text-ethiopian-gold'
+              }`}
+            >
+              <span className="font-geez font-bold">ሀ</span>
+              Ge'ez Fidel
+            </button>
+
+            <button
+              onClick={() => setActiveTab('notes')}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-md transition-all ${
+                activeTab === 'notes' 
+                  ? 'bg-ethiopian-gold/30 text-ethiopian-gold font-semibold border border-ethiopian-gold/50' 
+                  : 'text-parchment-600 dark:text-parchment-400 hover:text-ethiopian-gold'
+              }`}
+            >
+              <Bookmark className="w-3.5 h-3.5" />
+              Bookmarks
+            </button>
+          </nav>
+        )}
       </div>
     </header>
   );
