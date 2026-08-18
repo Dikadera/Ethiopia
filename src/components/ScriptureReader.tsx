@@ -12,7 +12,10 @@ import {
   Check, 
   GitMerge,
   Star,
-  Type
+  Type,
+  Grid,
+  Unlock,
+  BookOpen
 } from 'lucide-react';
 
 interface ScriptureReaderProps {
@@ -36,6 +39,7 @@ export const ScriptureReader: React.FC<ScriptureReaderProps> = ({
   const [copiedVerseNum, setCopiedVerseNum] = useState<number | null>(null);
   const [highlightedVerses, setHighlightedVerses] = useState<Record<number, string>>({});
   const [readingAudioVerseNum, setReadingAudioVerseNum] = useState<number | null>(null);
+  const [showChapterGridModal, setShowChapterGridModal] = useState(false);
 
   // Retrieve current chapter data or dynamically generate full readable verses for 100% chapter availability
   const chapters = CHAPTER_DATA[selectedBook.id] || [];
@@ -111,10 +115,13 @@ export const ScriptureReader: React.FC<ScriptureReaderProps> = ({
     sans: 'font-sans',
   };
 
+  // Generate array of all chapter numbers for direct 1-click access
+  const allChapterNumbers = Array.from({ length: selectedBook.totalChapters }, (_, i) => i + 1);
+
   return (
     <div className="max-w-5xl mx-auto space-y-6 pb-16 fade-slide-in">
       
-      {/* Top Toolbar: Book Selector, Chapter Selector, Text Controls */}
+      {/* Top Controls Bar */}
       <div className="sticky top-16 z-30 bg-parchment-100/95 dark:bg-ethiopian-obsidian/95 backdrop-blur-md p-4 rounded-2xl border border-ethiopian-gold/30 shadow-md flex flex-wrap items-center justify-between gap-4">
         
         {/* Book Selector */}
@@ -134,7 +141,7 @@ export const ScriptureReader: React.FC<ScriptureReaderProps> = ({
             ))}
           </select>
 
-          {/* Chapter Selector */}
+          {/* Chapter Quick Prev/Next & Grid Toggle */}
           <div className="flex items-center gap-1">
             <button
               onClick={() => setCurrentChapterNum(prev => Math.max(1, prev - 1))}
@@ -145,9 +152,14 @@ export const ScriptureReader: React.FC<ScriptureReaderProps> = ({
               <ChevronLeft className="w-4 h-4" />
             </button>
 
-            <span className="px-3 py-1 text-sm font-bold font-mono text-ethiopian-gold">
-              Cap. {currentChapterNum} / {selectedBook.totalChapters}
-            </span>
+            <button
+              onClick={() => setShowChapterGridModal(!showChapterGridModal)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-ethiopian-gold/20 hover:bg-ethiopian-gold text-ethiopian-gold hover:text-black transition-colors border border-ethiopian-gold/40 text-xs font-bold font-mono"
+              title="Open Full Chapter Selector Grid"
+            >
+              <Grid className="w-3.5 h-3.5" />
+              Chapter {currentChapterNum} / {selectedBook.totalChapters}
+            </button>
 
             <button
               onClick={() => setCurrentChapterNum(prev => Math.min(selectedBook.totalChapters, prev + 1))}
@@ -195,6 +207,37 @@ export const ScriptureReader: React.FC<ScriptureReaderProps> = ({
 
       </div>
 
+      {/* Unlocked Chapters Quick Strip */}
+      <div className="illuminated-card rounded-2xl p-4 bg-parchment-100/90 dark:bg-ethiopian-obsidianCard/90 border border-ethiopian-gold/30 space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-bold text-ethiopian-gold uppercase tracking-wider flex items-center gap-1.5">
+            <Unlock className="w-3.5 h-3.5 text-emerald-400" />
+            All {selectedBook.totalChapters} Chapters Unlocked — Direct Select:
+          </span>
+          <span className="text-[11px] text-emerald-400 font-semibold">100% Free & Readable</span>
+        </div>
+
+        {/* Scrollable Chapter Buttons Strip */}
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+          {allChapterNumbers.map(chNum => (
+            <button
+              key={chNum}
+              onClick={() => {
+                setCurrentChapterNum(chNum);
+                window.scrollTo({ top: 120, behavior: 'smooth' });
+              }}
+              className={`min-w-[32px] h-8 px-2 rounded-lg text-xs font-bold transition-all ${
+                currentChapterNum === chNum
+                  ? 'bg-ethiopian-gold text-black shadow-md scale-110 border border-ethiopian-gold'
+                  : 'bg-parchment-200/70 dark:bg-parchment-900/40 text-parchment-800 dark:text-parchment-200 hover:bg-ethiopian-gold/30 hover:text-ethiopian-gold'
+              }`}
+            >
+              {chNum}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Main Manuscript Reader Sheet */}
       <div className="illuminated-card rounded-3xl p-6 sm:p-10 border-2 border-ethiopian-gold/40 bg-parchment-50/95 dark:bg-ethiopian-obsidianCard/95 shadow-2xl relative">
         
@@ -214,7 +257,7 @@ export const ScriptureReader: React.FC<ScriptureReaderProps> = ({
           </p>
 
           <div className="text-sm font-mono text-ethiopian-gold/80 pt-1">
-            — Chapter {currentChapterNum} —
+            — Chapter {currentChapterNum} of {selectedBook.totalChapters} —
           </div>
         </div>
 
@@ -346,7 +389,10 @@ export const ScriptureReader: React.FC<ScriptureReaderProps> = ({
         {/* Bottom Page Navigation */}
         <div className="mt-12 pt-6 border-t border-ethiopian-gold/30 flex items-center justify-between">
           <button
-            onClick={() => setCurrentChapterNum(prev => Math.max(1, prev - 1))}
+            onClick={() => {
+              setCurrentChapterNum(prev => Math.max(1, prev - 1));
+              window.scrollTo({ top: 120, behavior: 'smooth' });
+            }}
             disabled={currentChapterNum <= 1}
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-parchment-200 dark:bg-ethiopian-obsidianCard border border-ethiopian-gold/30 text-xs font-semibold text-parchment-800 dark:text-parchment-200 disabled:opacity-30 disabled:cursor-not-allowed hover:border-ethiopian-gold"
           >
@@ -354,12 +400,15 @@ export const ScriptureReader: React.FC<ScriptureReaderProps> = ({
             Previous Chapter
           </button>
 
-          <span className="text-xs font-mono text-ethiopian-gold">
+          <span className="text-xs font-mono text-ethiopian-gold font-bold">
             {selectedBook.titleEnglish} — Cap. {currentChapterNum} of {selectedBook.totalChapters}
           </span>
 
           <button
-            onClick={() => setCurrentChapterNum(prev => Math.min(selectedBook.totalChapters, prev + 1))}
+            onClick={() => {
+              setCurrentChapterNum(prev => Math.min(selectedBook.totalChapters, prev + 1));
+              window.scrollTo({ top: 120, behavior: 'smooth' });
+            }}
             disabled={currentChapterNum >= selectedBook.totalChapters}
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-ethiopian-gold text-black text-xs font-semibold disabled:opacity-30 disabled:cursor-not-allowed hover:bg-ethiopian-goldBright transition-colors"
           >
@@ -369,6 +418,53 @@ export const ScriptureReader: React.FC<ScriptureReaderProps> = ({
         </div>
 
       </div>
+
+      {/* Chapter Grid Modal for 1-Click Access to All Chapters */}
+      {showChapterGridModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm fade-slide-in">
+          <div className="bg-parchment-100 dark:bg-ethiopian-obsidianCard border-2 border-ethiopian-gold rounded-3xl p-6 sm:p-8 max-w-2xl w-full max-h-[85vh] overflow-y-auto space-y-6 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-ethiopian-gold/30 pb-4">
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-6 h-6 text-ethiopian-gold" />
+                <div>
+                  <h3 className="text-xl font-bold font-manuscript text-parchment-900 dark:text-parchment-50">
+                    {selectedBook.titleEnglish} — Chapter Grid
+                  </h3>
+                  <p className="text-xs text-ethiopian-gold font-medium">
+                    All {selectedBook.totalChapters} Chapters Unlocked & 100% Readable
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowChapterGridModal(false)}
+                className="text-parchment-500 hover:text-ethiopian-gold font-bold text-lg px-3 py-1 rounded-lg bg-parchment-200 dark:bg-parchment-900"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2">
+              {allChapterNumbers.map(chNum => (
+                <button
+                  key={chNum}
+                  onClick={() => {
+                    setCurrentChapterNum(chNum);
+                    setShowChapterGridModal(false);
+                    window.scrollTo({ top: 120, behavior: 'smooth' });
+                  }}
+                  className={`h-11 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center border ${
+                    currentChapterNum === chNum
+                      ? 'bg-ethiopian-gold text-black border-ethiopian-gold shadow-lg scale-105'
+                      : 'bg-parchment-200/80 dark:bg-parchment-900/50 text-parchment-900 dark:text-parchment-100 border-ethiopian-gold/20 hover:border-ethiopian-gold hover:bg-ethiopian-gold/20 hover:text-ethiopian-gold'
+                  }`}
+                >
+                  {chNum}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
